@@ -1,4 +1,9 @@
-#BentoML Heroku deployment tool
+# BentoML Heroku deployment tool
+
+[![Generic badge](https://img.shields.io/badge/Release-Alpha-<COLOR>.svg)](https://shields.io/)
+
+Heroku is a popular platform as a service(PaaS) based on managed container system. It provides
+a complete solution for build, run and scale applications.
 
 
 ## Prerequisites
@@ -10,9 +15,84 @@
     - Install instruction: https://docs.docker.com/install
 - Install required python packages
     - `$ pip install -r requirements.txt`
-    
 
-## Deployment operations
+
+## Deploy Quickstart Iris classifier to Heroku
+
+1. Build and save Bento Bundle from [BentoML quick start guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb)
+
+2. Create Heroku deployment with deploy script
+
+    Run deploy script in the command line:
+    ```bash
+    $ BENTO_BUNDLE_PATH=$(bentoml get IrisClassifier:latest --print-location -q)
+    $ python deploy.py $BENTO_BUNDLE_PATH test-script heroku_config.json
+
+    # Output
+    Login Heroku registry
+    Create Heroku app btml-test-script
+    Build Heroku app btml-test-script
+    Deploy Heroku app btml-test-script
+    === btml-test-script
+    Auto Cert Mgmt: false
+    Dynos:          web: 1
+    Git URL:        https://git.heroku.com/btml-test-script.git
+    Owner:          yubz86@gmail.com
+    Region:         us
+    Repo Size:      0 B
+    Slug Size:      0 B
+    Stack:          container
+    Web URL:        https://btml-test-script.herokuapp.com/
+    ```
+
+3. Get deployment information
+
+    ```bash
+    $ python describe.py test-script
+
+    # Output
+    === btml-test-script
+    Auto Cert Mgmt: false
+    Dynos:          web: 1
+    Git URL:        https://git.heroku.com/btml-test-script.git
+    Owner:          yubz86@gmail.com
+    Region:         us
+    Repo Size:      0 B
+    Slug Size:      0 B
+    Stack:          container
+    Web URL:        https://btml-test-script.herokuapp.com/
+    ```
+
+4. Make sample request against deployed service
+    ```bash
+    $ curl -i \
+        --header "Content-Type: application/json" \
+        --request POST \
+        --data '[[5.1, 3.5, 1.4, 0.2]]' \
+        https://btml-test-script.herokuapp.com/predict
+
+    # Output
+    HTTP/1.1 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+    X-Request-Id: f499b6d0-ad9b-4d79-850a-3dc058bd67b2
+    Content-Length: 3
+    Date: Mon, 28 Jun 2021 02:50:35 GMT
+    Server: Python/3.7 aiohttp/3.7.4.post0
+    Via: 1.1 vegur
+
+    [0]%
+    ```
+
+5. Delete Heroku deployment
+    ```bash
+    $ python delete.py test-script
+
+    # Output
+    Removing app btml-test-script
+    ```
+
+## Deployment command reference
 
 ### Create a deployment
 
