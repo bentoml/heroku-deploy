@@ -3,7 +3,7 @@
 [![Generic badge](https://img.shields.io/badge/Release-Alpha-<COLOR>.svg)](https://shields.io/)
 
 Heroku is a popular platform as a service(PaaS) based on managed container system. It provides
-a complete solution for build, run and scale applications.
+a complete solution for building, running, and scaling applications.
 
 
 ## Prerequisites
@@ -17,13 +17,14 @@ a complete solution for build, run and scale applications.
     - `$ pip install -r requirements.txt`
 
 
-## Deploy Quickstart Iris classifier to Heroku
+## Deploy the quick start guide's IrisClassifier to Heroku
 
 1. Build and save Bento Bundle from [BentoML quick start guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb)
 
-2. Create Heroku deployment with deploy script
+2. Create Heroku deployment with deployment
 
     Run deploy script in the command line:
+
     ```bash
     $ BENTO_BUNDLE_PATH=$(bentoml get IrisClassifier:latest --print-location -q)
     $ python deploy.py $BENTO_BUNDLE_PATH test-script heroku_config.json
@@ -64,6 +65,7 @@ a complete solution for build, run and scale applications.
     ```
 
 4. Make sample request against deployed service
+
     ```bash
     $ curl -i \
         --header "Content-Type: application/json" \
@@ -85,6 +87,7 @@ a complete solution for build, run and scale applications.
     ```
 
 5. Delete Heroku deployment
+
     ```bash
     $ python delete.py test-script
 
@@ -97,17 +100,20 @@ a complete solution for build, run and scale applications.
 ### Create a deployment
 
 Use command line
-```commandline
-$ python deploy.py <Bento_bundle_path> <Deployment_name> <Config_JSON default is heroku_config.json>
+
+```bash
+python deploy.py <Bento_bundle_path> <Deployment_name> <Config_JSON default is heroku_config.json>
 ```
 
 Example:
+
 ```bash
-$ MY_BUNDLE_PATH=${bentoml get IrisClassifier:latest --print-location -q)
-$ python deploy.py $MY_BUNDLE_PATH my_first_deployment heroku_config.json
+MY_BUNDLE_PATH=${bentoml get IrisClassifier:latest --print-location -q)
+python deploy.py $MY_BUNDLE_PATH my_first_deployment heroku_config.json
 ```
 
 Use Python API
+
 ```python
 from deploy import deploy_heroku
 
@@ -122,11 +128,13 @@ deploy_heroku(BENTO_BUNDLE_PATH, DEPLOYMENT_NAME, CONFIG_JSON)
 ### Update a deployment
 
 Use command line
-```commandline
-$ python update.py <Bento_bundle_path> <Deployment_name> <Config_JSON>
+
+```bash
+python update.py <Bento_bundle_path> <Deployment_name> <Config_JSON>
 ```
 
 Use Python API
+
 ```python
 from update import update_heroku
 
@@ -136,11 +144,13 @@ update_heroku(BENTO_BUNDLE_PATH, DEPLOYMENT_NAME, CONFIG_JSON)
 ### Get a deployment's status and information
 
 Use command line
-```commandline
-$ python describe.py <Deployment_name>
+
+```bash
+python describe.py <Deployment_name>
 ```
 
 Use Python API
+
 ```python
 from describe import describe_heroku
 
@@ -150,11 +160,13 @@ describe_heroku(DEPLOYMENT_NAME)
 ### Delete a deployment
 
 Use command line
-```commandline
-$ python delete.py <Deployment_name>
+
+```bash
+python delete.py <Deployment_name>
 ```
 
 Use Python API
+
 ```python
 from delete import delete_heroku
 
