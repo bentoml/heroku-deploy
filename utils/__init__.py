@@ -1,6 +1,7 @@
 import re
 import json
 import subprocess
+import cerberus
 
 
 def run_shell_command(command, cwd=None, env=None, shell_mode=False):
@@ -27,6 +28,7 @@ def run_shell_command(command, cwd=None, env=None, shell_mode=False):
 def get_configuration_value(config_file):
     with open(config_file, "r") as file:
         configuration = json.loads(file.read())
+    validate_configuration_value(configuration)
     return configuration
 
 
@@ -38,3 +40,33 @@ def generate_heroku_app_name(deployment_name):
     invalid_chars = re.compile("[^a-zA-Z0-9-]")
     app_name = re.sub(invalid_chars, "-", app_name)
     return app_name.lower()
+
+
+def validate_configuration_value(configuration):
+    schema = {
+    "dyno_counts": {
+        "type": "integer",
+        "required": True,
+        "min": 1
+    },
+    "dyno_type": {
+        "type": "string",
+        "allowed": [
+            "free",
+            "hobby",
+            "standard-1x",
+            "standard-2x",
+            "performance-m",
+            "performance-l"
+        ],
+        "required": True
+        },
+    }
+
+    v = cerberus.Validator(schema)
+    if v.validate(configuration, schema):
+        pass
+    else:
+        raise Exception(
+            f"Config validation failed {v.errors}"
+        )
