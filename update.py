@@ -1,10 +1,10 @@
 import sys
 
-from utils import get_configuration_value, generate_heroku_app_name, run_shell_command
+from .utils import get_configuration_value, generate_heroku_app_name, run_shell_command
 
 
-def update_heroku(bento_bundle_path, deployment_name, config_json):
-    heroku_config = get_configuration_value(config_json)
+def update(bento_bundle_path, deployment_name, heroku_config):
+    heroku_config = get_configuration_value(heroku_config)
 
     app_name = generate_heroku_app_name(deployment_name)
 
@@ -39,4 +39,4 @@ if __name__ == "__main__":
     deployment_name = sys.argv[2]
     config_json = sys.argv[3] if sys.argv[3] else "heroku_config.json"
 
-    update_heroku(bento_bundle_path, deployment_name, config_json)
+    update(bento_bundle_path, deployment_name, config_json)

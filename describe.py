@@ -1,9 +1,9 @@
 import sys
 
-from utils import generate_heroku_app_name, run_shell_command
+from .utils import generate_heroku_app_name, run_shell_command
 
 
-def describe_heroku(deployment_name):
+def describe(deployment_name):
     app_name = generate_heroku_app_name(deployment_name)
     stdout, stderr = run_shell_command(['heroku', 'apps:info', '--app', app_name])
     print(stdout)
@@ -14,4 +14,4 @@ if __name__ == "__main__":
         raise Exception("Please provide deployment_name")
     deployment_name = sys.argv[1]
 
-    describe_heroku(deployment_name)
+    describe(deployment_name)
