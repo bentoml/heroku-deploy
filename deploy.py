@@ -1,4 +1,6 @@
 import sys
+import argparse
+import os
 
 from .utils import run_shell_command, get_configuration_value, generate_heroku_app_name
 
@@ -32,13 +34,24 @@ def deploy(bento_bundle_path, deployment_name, heroku_config):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        raise Exception(
-            "Please provide bento_bundle_path deployment_name and configuration json"
-        )
-    bento_bundle_path = sys.argv[1]
-    deployment_name = sys.argv[2]
-    config_json = sys.argv[3] if sys.argv[3] else "heroku_config.json"
-    heroku_config = get_configuration_value(config_json)
+    parser = argparse.ArgumentParser(
+        description="Deploy the bentoml bundle to Heroku",
+        epilog="Check out https://github.com/bentoml/heroku-deploy to know more",
+    )
+    parser.add_argument(
+        "bento_bundle_path", help="Path to bentoml bundle"
+    )
+    parser.add_argument(
+        "deployment_name", help="The name you want to use for your deployment"
+    )
+    parser.add_argument(
+        "config_json",
+        help="(optional) The config file for your deployment",
+        default=os.path.join(os.getcwd(), "heroku_config.json"),
+        nargs="?",
+    )
+    args = parser.parse_args()
 
-    deploy(bento_bundle_path, deployment_name, heroku_config)
+    heroku_config = get_configuration_value(args.config_json)
+    deploy(args.bento_bundle_path, args.deployment_name, heroku_config)
+    print("Deployment Complete!")
