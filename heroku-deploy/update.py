@@ -2,7 +2,7 @@ import sys
 import argparse
 import os
 
-from utils import get_configuration_value, generate_heroku_app_name, run_shell_command
+from .utils import get_configuration_value, generate_heroku_app_name, run_shell_command
 
 
 def update(bento_bundle_path, deployment_name, heroku_config):

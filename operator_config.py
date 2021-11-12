@@ -1,9 +1,7 @@
-from .delete import delete
-from .deploy import deploy
-from .describe import describe
-from .update import update
-
 OPERATOR_NAME = "heroku"
+
+OPERATOR_MODULE = "heroku-deploy"
+
 OPERATOR_SCHEMA = {
     "dyno_counts": {
         "type": "integer",
