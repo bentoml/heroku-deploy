@@ -7,7 +7,6 @@ a complete solution for building, running, and scaling applications.
 
 This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https://github.com/bentoml/cloud-deployment-tool/tree/prototype). See steps on how to add Heroku Deployment Tool as an Operator [here](#operator-deployment). 
 
-
 ## Prerequisites
 
 - An active Heroku account configured on the machine with AWS CLI installed and configured
