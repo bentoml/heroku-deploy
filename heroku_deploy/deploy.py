@@ -32,6 +32,8 @@ def deploy(bento_bundle_path, deployment_name, heroku_config):
     stdout, stderr = run_shell_command(['heroku', 'apps:info', '--app', app_name])
     print(stdout)
 
+    return None
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

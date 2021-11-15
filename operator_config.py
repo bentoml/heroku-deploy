@@ -1,6 +1,6 @@
 OPERATOR_NAME = "heroku"
 
-OPERATOR_MODULE = "heroku-deploy"
+OPERATOR_MODULE = "heroku_deploy"
 
 OPERATOR_SCHEMA = {
     "dyno_counts": {
