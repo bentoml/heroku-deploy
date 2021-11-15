@@ -1,7 +1,3 @@
-import sys
-import argparse
-import os
-
 from .utils import get_configuration_value, generate_heroku_app_name, run_shell_command
 
 
@@ -28,27 +24,3 @@ def update(bento_bundle_path, deployment_name, heroku_config):
     )
     stdout, stderr = run_shell_command(['heroku', 'apps:info', '--app', app_name])
     print(stdout)
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Update the bentoml bundle on Heroku",
-        epilog="Check out https://github.com/bentoml/heroku-deploy to know more",
-    )
-    parser.add_argument(
-        "bento_bundle_path", help="Path to bentoml bundle"
-    )
-    parser.add_argument(
-        "deployment_name", help="The name you want to use for your deployment"
-    )
-    parser.add_argument(
-        "config_json",
-        help="(optional) The config file for your deployment",
-        default=os.path.join(os.getcwd(), "heroku_config.json"),
-        nargs="?",
-    )
-    args = parser.parse_args()
-
-    heroku_config = get_configuration_value(args.config_json)
-    update(args.bento_bundle_path, args.deployment_name, heroku_config)
-    print("Update Complete!")
