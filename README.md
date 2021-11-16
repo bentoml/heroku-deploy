@@ -180,21 +180,16 @@ delete(DEPLOYMENT_NAME)
 
 To add the Heroku Deployment Tool as an operator for the Bento Cloud Deployment Tool:
 
-1. Install `bcdt` from the [repo](https://github.com/bentoml/cloud-deployment-tool/tree/prototype)
+1. Install `bcdt` with `pip install bcdt`
+2. See list of official operators
 ```bash
-$ git clone git@github.com:bentoml/cloud-deployment-tool.git
-$ git checkout prototype
-$ pip install --editable .
-```
-2. Install `heroku-deploy`
-```bash
-$ git clone git@github.com:bentoml/heroku-deploy.git
-```
-3. Add `heroku` as an operator for `bcdt`
-```bash
-$ bcdt operators add heroku-deploy/
-$ bcdt operators list
-{'heroku': ['/home/damir/Git/heroku-deploy', None]}
+$ bcdt operators add
+The following operators are available to install 
+(visit http://link.to/deployment/docs for more info about each operator.)
+1. aws-lambda
+2. heroku
+...
+Choose one to install: 2
 ```
 4. Deploy using the Heroku Deployment Tool as an Operator for `bcdt`
 ```bash
