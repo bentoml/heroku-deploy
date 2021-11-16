@@ -1,4 +1,4 @@
-from .utils import run_shell_command, generate_heroku_app_name
+from .utils import generate_heroku_app_name, run_shell_command
 
 
 def delete(deployment_name, heroku_config=None):

@@ -1,4 +1,4 @@
-from .utils import run_shell_command, get_configuration_value, generate_heroku_app_name
+from .utils import generate_heroku_app_name, get_configuration_value, run_shell_command
 
 
 def deploy(bento_bundle_path, deployment_name, heroku_config):
@@ -25,7 +25,7 @@ def deploy(bento_bundle_path, deployment_name, heroku_config):
             app_name,
         ]
     )
-    stdout, stderr = run_shell_command(['heroku', 'apps:info', '--app', app_name])
+    stdout, stderr = run_shell_command(["heroku", "apps:info", "--app", app_name])
     print(stdout)
 
     return None
