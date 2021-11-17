@@ -14,13 +14,93 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
     - Login Heroku CLI: `$heroku login`
 - Docker is installed and running on the machine.
     - Install instruction: https://docs.docker.com/install
-- Install required python packages
-    - `$ pip install -r requirements.txt`
+- Built bento. 
+    - Checkout [BentoML quickstart guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb) for how to get it started.
 
 
-## Deploy the quick start guide's IrisClassifier to Heroku
+## Deploy to Heroku with [Bentoctl](https://github.com/bentoml/bentoctl)
 
-1. Build and save Bento Bundle from [BentoML quick start guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb)
+1. Install BentoCTL
+    ```bash
+    $ pip install bentoctl
+    ```
+
+2. Add Heroku operator
+    ```bash
+    $ bentoctl operator add heroku
+    ```
+
+3. Deploy to Heroku use BentoCTL deploy command
+    ```bash
+    # Use the interactive mode
+    $ bentoctl deploy 
+    #
+    # or provide deployment spec yaml. See BentoCTL repo for more detail
+    $ bentoctl deploy --file my_deployment_spec.yaml
+    
+    #example response
+    Login Heroku registry
+    Create Heroku app btml-test-script
+    Build Heroku app btml-test-script
+    Deploy Heroku app btml-test-script
+    === btml-test-script
+    Auto Cert Mgmt: false
+    Dynos:          web: 1
+    Git URL:        https://git.heroku.com/btml-test-script.git
+    Owner:          your-email@email.com
+    Region:         us
+    Repo Size:      0 B
+    Slug Size:      0 B
+    Stack:          container
+    Web URL:        https://btml-test-script.herokuapp.com/
+    ```
+
+4. Get deployment information
+
+    ```bash
+    $ bentoctl describe my_deployment_spec.yaml
+    ```
+
+5. Make sample request
+
+    ```bash
+    $ curl -i \
+        --header "Content-Type: application/json" \
+        --request POST \
+        --data '[[5.1, 3.5, 1.4, 0.2]]' \
+        https://btml-test-script.herokuapp.com/predict
+
+    # Output
+    HTTP/1.1 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+    X-Request-Id: f499b6d0-ad9b-4d79-850a-3dc058bd67b2
+    Content-Length: 3
+    Date: Mon, 28 Jun 2021 02:50:35 GMT
+    Server: Python/3.7 aiohttp/3.7.4.post0
+    Via: 1.1 vegur
+
+    [0]%
+    ```
+
+6. Delete deployment with Bentoctl
+
+    ```bash
+    $ bentoctl delete my_deployment_spec.yaml
+    ```
+
+
+## Deploy to Heroku with opeartor scripts
+
+
+1. Download Heroku deployment and Install the required packages
+    
+    ```bash
+    $ git clone https://github.com/bentoml/heroku-deploy.git
+    $ cd heroku-deploy
+    $ pip install -r requirements.txt
+    ```
+
 
 2. Create Heroku deployment with deployment
 
@@ -174,57 +254,4 @@ Use Python API
 from heroku_deploy import delete
 
 delete(DEPLOYMENT_NAME)
-```
-
-## Operator Deployment
-
-To add the Heroku Deployment Tool as an operator for the Bento Cloud Deployment Tool:
-
-1. Install `bcdt` with `pip install bcdt`
-2. See list of official operators
-```bash
-$ bcdt operators add
-The following operators are available to install 
-(visit http://link.to/deployment/docs for more info about each operator.)
-1. aws-lambda
-2. heroku
-...
-Choose one to install: 2
-```
-4. Deploy using the Heroku Deployment Tool as an Operator for `bcdt`
-```bash
-$ bcdt deploy
-Interactive Deployment Spec Builder
-
-Welcome! You are now in interactive mode.
-
-This mode will help you setup the deployment_spec.yaml file required for
-deployment. Fill out the appropriate values for the fields.
-
-(deployment spec will be saved to: ./deployment_spec.yaml)
-
-api_version: v1
-metadata: 
-    name: test-script
-    operator: heroku
-    bento: $BENTO_BUNDLE_PATH
-spec: 
-    dyno_counts: 1
-    dyno_type: free
-deployment spec file exists! Should I overide? [Y/n]: Y
-deployment spec generated to: deployment_spec.yaml
-Login Heroku registry
-Create Heroku app btml-test-script
-Build Heroku app btml-test-script
-Deploy Heroku app btml-test-script
-=== btml-test-script
-Auto Cert Mgmt: false
-Dynos:          web: 1
-Git URL:        https://git.heroku.com/btml-test-script.git
-Owner:          your-email@email.com
-Region:         us
-Repo Size:      0 B
-Slug Size:      0 B
-Stack:          container
-Web URL:        https://btml-test-script.herokuapp.com/
 ```
