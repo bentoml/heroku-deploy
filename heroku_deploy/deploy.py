@@ -1,11 +1,7 @@
-import sys
-
-from utils import run_shell_command, get_configuration_value, generate_heroku_app_name
+from .utils import generate_heroku_app_name, get_configuration_value, run_shell_command
 
 
-def deploy_heroku(bento_bundle_path, deployment_name, config_json):
-    heroku_config = get_configuration_value(config_json)
-
+def deploy(bento_bundle_path, deployment_name, heroku_config):
     app_name = generate_heroku_app_name(deployment_name)
 
     print("Login Heroku registry")
@@ -29,17 +25,7 @@ def deploy_heroku(bento_bundle_path, deployment_name, config_json):
             app_name,
         ]
     )
-    stdout, stderr = run_shell_command(['heroku', 'apps:info', '--app', app_name])
+    stdout, stderr = run_shell_command(["heroku", "apps:info", "--app", app_name])
     print(stdout)
 
-
-if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        raise Exception(
-            "Please provide bento_bundle_path deployment_name and configuration json"
-        )
-    bento_bundle_path = sys.argv[1]
-    deployment_name = sys.argv[2]
-    config_json = sys.argv[3] if sys.argv[3] else "heroku_config.json"
-
-    deploy_heroku(bento_bundle_path, deployment_name, config_json)
+    return None

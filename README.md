@@ -3,9 +3,9 @@
 [![Generic badge](https://img.shields.io/badge/Release-Alpha-<COLOR>.svg)](https://shields.io/)
 
 Heroku is a popular platform as a service(PaaS) based on managed container system. It provides
-a complete solution for building, running, and scaling applications.
+a complete solution for building, running, and scaling applications
 
-This tool can be used as an Operator for the [BentoCTL](https://github.com/bentoml/bentoctl). See steps on how to add Heroku Deployment Tool as an Operator [here](#deploy-to-heroku-with-bentoctl). 
+This tool can be used as an Operator for the [BentoCTL](https://github.com/bentoml/bentoctl). See steps on how to add Heroku Deployment Tool as an Operator [here](#deploy-to-heroku-with-bentoctl)
 
 ## Prerequisites
 
@@ -15,8 +15,7 @@ This tool can be used as an Operator for the [BentoCTL](https://github.com/bento
 - Docker is installed and running on the machine
     - Install instruction: https://docs.docker.com/install
 - Built bento
-    - Checkout [BentoML quickstart guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb) for how to get it started
-
+    - Checkout [BentoML quickstart guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb) for how to get started
 
 ## Deploy to Heroku with BentoCTL
 
@@ -100,14 +99,12 @@ This tool can be used as an Operator for the [BentoCTL](https://github.com/bento
 
 ## Deploy to Heroku with opeartor scripts
 
-
 1. Download Heroku deployment and install the required packages
     ```bash
     $ git clone https://github.com/bentoml/heroku-deploy.git
     $ cd heroku-deploy
     $ pip install -r requirements.txt
     ```
-
 
 2. Create Heroku deployment with deployment
 
