@@ -3,22 +3,21 @@
 [![Generic badge](https://img.shields.io/badge/Release-Alpha-<COLOR>.svg)](https://shields.io/)
 
 Heroku is a popular platform as a service(PaaS) based on managed container system. It provides
-a complete solution for building, running, and scaling applications.
+a complete solution for building, running, and scaling applications
 
-This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https://github.com/bentoml/cloud-deployment-tool/tree/prototype). See steps on how to add Heroku Deployment Tool as an Operator [here](#operator-deployment). 
+This tool can be used as an Operator for the [BentoCTL](https://github.com/bentoml/bentoctl). See steps on how to add Heroku Deployment Tool as an Operator [here](#deploy-to-heroku-with-bentoctl)
 
 ## Prerequisites
 
 - An active Heroku account configured on the machine with AWS CLI installed and configured
     - Install instruction: https://devcenter.heroku.com/articles/heroku-cli#getting-started
     - Login Heroku CLI: `$heroku login`
-- Docker is installed and running on the machine.
+- Docker is installed and running on the machine
     - Install instruction: https://docs.docker.com/install
-- Built bento. 
-    - Checkout [BentoML quickstart guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb) for how to get it started.
+- Built bento
+    - Checkout [BentoML quickstart guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb) for how to get started
 
-
-## Deploy to Heroku with [Bentoctl](https://github.com/bentoml/bentoctl)
+## Deploy to Heroku with BentoCTL
 
 1. Install BentoCTL
     ```bash
@@ -27,7 +26,18 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
 
 2. Add Heroku operator
     ```bash
-    $ bentoctl operator add heroku
+    $ bentoctl operator add
+    Choose of the Official Operators
+    yatai
+    > heroku
+    aws-lambda
+    aws-sagemaker
+    asw-ec2
+    azure-functions
+    azure-container-instances
+    google_compute_engine
+    google-cloud-run      
+    Added heroku!   
     ```
 
 3. Deploy to Heroku use BentoCTL deploy command
@@ -36,7 +46,7 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
     $ bentoctl deploy 
     #
     # or provide deployment spec yaml. See BentoCTL repo for more detail
-    $ bentoctl deploy --file my_deployment_spec.yaml
+    $ bentoctl deploy --file deployment_spec.yaml
     
     #example response
     Login Heroku registry
@@ -56,13 +66,11 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
     ```
 
 4. Get deployment information
-
     ```bash
     $ bentoctl describe my_deployment_spec.yaml
     ```
 
 5. Make sample request
-
     ```bash
     $ curl -i \
         --header "Content-Type: application/json" \
@@ -83,29 +91,24 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
     [0]%
     ```
 
-6. Delete deployment with Bentoctl
-
+6. Delete deployment with BentoCTL
     ```bash
-    $ bentoctl delete my_deployment_spec.yaml
+    $ bentoctl delete deployment_spec.yaml
     ```
 
 
 ## Deploy to Heroku with opeartor scripts
 
-
-1. Download Heroku deployment and Install the required packages
-    
+1. Download Heroku deployment and install the required packages
     ```bash
     $ git clone https://github.com/bentoml/heroku-deploy.git
     $ cd heroku-deploy
     $ pip install -r requirements.txt
     ```
 
-
 2. Create Heroku deployment with deployment
 
     Run deploy script in the command line:
-
     ```bash
     $ BENTO_BUNDLE_PATH=$(bentoml get IrisClassifier:latest --print-location -q)
     $ ./deploy $BENTO_BUNDLE_PATH test-script heroku_config.json
@@ -128,7 +131,6 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
     ```
 
 3. Get deployment information
-
     ```bash
     $ ./describe test-script
 
@@ -146,7 +148,6 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
     ```
 
 4. Make sample request against deployed service
-
     ```bash
     $ curl -i \
         --header "Content-Type: application/json" \
@@ -168,7 +169,6 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
     ```
 
 5. Delete Heroku deployment
-
     ```bash
     $ ./delete test-script
 
@@ -176,25 +176,22 @@ This tool can be used as an Operator for the [Bento Cloud Deployment Tool](https
     Removing app btml-test-script
     ```
 
-## Deployment command reference
+## Deployment Command Reference
 
-### Create a deployment
+### Create a Deployment
 
 Use command line
-
 ```bash
-$ ./deploy <Bento_bundle_path> <Deployment_name> <Config_JSON, default is heroku_config.json>
+$ ./deploy <BENTO_BUNDLE_PATH> <DEPLOYMENT_NAME> <CONFIG_JSON, default is heroku_config.json>
 ```
 
 Example:
-
 ```bash
 BENTO_BUNDLE_PATH=${bentoml get IrisClassifier:latest --print-location -q)
 $ ./deploy $BENTO_BUNDLE_PATH my_first_deployment heroku_config.json
 ```
 
 Use Python API
-
 ```python
 from heroku_deploy import deploy
 
@@ -202,21 +199,14 @@ deploy_heroku(BENTO_BUNDLE_PATH, DEPLOYMENT_NAME, HEROKU_CONFIG)
 ```
 * where `HEROKU_CONFIG` is a dictionary with keys for `"dyno_counts"` and `"dyno_type"`
 
-#### Available options
-
-* `dyno_counts`: Amount of dyno running for the deployment, see https://devcenter.heroku.com/articles/dyno-types#default-scaling-limits for more information.
-* `dyno_type`: Heroku dyno(instance) type, see https://devcenter.heroku.com/articles/dyno-types for more information
-
-### Update a deployment
+### Update a Deployment
 
 Use command line
-
 ```bash
 $ ./update <Bento_bundle_path> <Deployment_name> <Config_JSON>
 ```
 
 Use Python API
-
 ```python
 from heroku_deploy import update
 
@@ -224,34 +214,35 @@ update(BENTO_BUNDLE_PATH, DEPLOYMENT_NAME, HEROKU_CONFIG)
 ```
 * where `HEROKU_CONFIG` is a dictionary with keys for `"dyno_counts"` and `"dyno_type"`
 
-### Get a deployment's status and information
+### Get a Deployment’s Status and Information
 
 Use command line
-
 ```bash
-$ ./describe <Deployment_name>
+$ ./describe <DEPLOYMENT_NAME>
 ```
 
 Use Python API
-
 ```python
 from heroku_deploy import describe
 
 describe(DEPLOYMENT_NAME)
 ```
 
-### Delete a deployment
+### Delete a Deployment
 
 Use command line
-
 ```bash
 $ ./delete <Deployment_name>
 ```
 
 Use Python API
-
 ```python
 from heroku_deploy import delete
 
 delete(DEPLOYMENT_NAME)
 ```
+
+### Configuring the Deployment
+There is an optional config file available that you can use to specify the configs for your deployment, [heroku_config.json](heroku_config.json). This is the list of configurations you can use to deploy your bento to Heroku. Please refer to the documenation attached to each point for more information about the options
+- `dyno_counts`: Number of dynos running for the deployment. A dyno is an isolated, virtualized Linux container that is designed to execute your code. Check the [docs](https://devcenter.heroku.com/articles/dyno-types#default-scaling-limits), and [article](https://www.heroku.com/dynos) for more information
+- `dyno_type`: Dyno (instance) type. Each dyno type provides a certain number of RAM, CPU share, Compute, and wheter it sleeps. Check the [docs](https://devcenter.heroku.com/articles/dyno-types) for more information
