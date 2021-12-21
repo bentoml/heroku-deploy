@@ -1,31 +1,42 @@
-from .utils import generate_heroku_app_name, get_configuration_value, run_shell_command
+from bentoml.bentos import containerize
+from .utils import (
+    generate_heroku_resource_names,
+    run_shell_command,
+    get_tag_from_path,
+    push_image,
+)
 
 
-def deploy(bento_bundle_path, deployment_name, heroku_config):
-    app_name = generate_heroku_app_name(deployment_name)
-
-    print("Login Heroku registry")
-    run_shell_command(["heroku", "container:login"])
+def deploy(bento_path, deployment_name, deployment_spec):
+    app_name, repository_url = generate_heroku_resource_names(deployment_name)
 
     print(f"Create Heroku app {app_name}")
     run_shell_command(["heroku", "apps:create", app_name, "--no-remote"])
 
-    print(f"Build Heroku app {app_name}")
-    run_shell_command(
-        ["heroku", "container:push", "web", "--app", app_name], cwd=bento_bundle_path
+    deploy_bento(bento_path, deployment_spec, app_name, repository_url)
+
+
+def deploy_bento(bento_path, deployment_spec, app_name, repository_url):
+    bento_tag = get_tag_from_path(bento_path)
+    print("Login Heroku registry")
+    run_shell_command(["heroku", "container:login"])
+
+    print("Containerizing the bento")
+    containerize(bento_tag.name, docker_image_tag=repository_url)
+
+    print(f"Push Heroku app {app_name}")
+    push_image(
+        repository=repository_url
     )
+
     print(f"Deploy Heroku app {app_name}")
     run_shell_command(["heroku", "container:release", "web", "--app", app_name])
     run_shell_command(
         [
             "heroku",
             "ps:scale",
-            f'worker={heroku_config["dyno_type"]}:{heroku_config["dyno_counts"]}',
+            f'worker={deployment_spec["dyno_type"]}:{deployment_spec["dyno_counts"]}',
             "--app",
             app_name,
         ]
     )
-    stdout, stderr = run_shell_command(["heroku", "apps:info", "--app", app_name])
-    print(stdout)
-
-    return None
