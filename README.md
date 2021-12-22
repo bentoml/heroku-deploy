@@ -1,11 +1,35 @@
-# BentoML Heroku Deployment Tool
+<div align="center">
+    <h1>Heroku Operator</h1>
+    <p>
+        <img src="https://user-images.githubusercontent.com/5261489/147071105-eb7252b8-38d2-4357-9617-48b754f4fcdb.png" width=40%/>
+        <br>
+        <img src="https://img.shields.io/badge/Release-Alpha-<COLOR>.svg"/>
+    <p>
+</div>
 
-[![Generic badge](https://img.shields.io/badge/Release-Alpha-<COLOR>.svg)](https://shields.io/)
 
 Heroku is a popular platform as a service(PaaS) based on managed container system. It provides
 a complete solution for building, running, and scaling applications
 
-This tool can be used as an Operator for the [BentoCTL](https://github.com/bentoml/bentoctl). See steps on how to add Heroku Deployment Tool as an Operator [here](#deploy-to-heroku-with-bentoctl)
+This tool can be used as an Operator for the [bentoctl](https://github.com/bentoml/bentoctl). See steps on how to add Heroku Deployment Tool as an Operator [here](#deploy-to-heroku-with-bentoctl)
+
+<!--ts-->
+
+## Table of Contents
+
+   * [Prerequisites](#prerequisites)
+   * [Deploy to Heroku with bentoctl](#deploy-to-heroku-with-bentoctl)
+   * [Deploy to Heroku using scripts](#deploy-to-heroku-using-scripts)
+   * [Configuring the Deployment](#configuring-the-deployment)
+   * [Deployment Command Reference](#deployment-command-reference)
+      * [Create a Deployment](#create-a-deployment)
+      * [Update a Deployment](#update-a-deployment)
+      * [Get a Deployment’s Status and Information](#get-a-deployments-status-and-information)
+      * [Delete a Deployment](#delete-a-deployment)
+
+<!-- Added by: jjmachan, at: Wednesday 22 December 2021 03:32:43 PM IST -->
+
+<!--te-->
 
 ## Prerequisites
 
@@ -15,54 +39,46 @@ This tool can be used as an Operator for the [BentoCTL](https://github.com/bento
 - Docker is installed and running on the machine
     - Install instruction: https://docs.docker.com/install
 - Built bento
-    - Checkout [BentoML quickstart guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb) for how to get started
+    - Checkout [BentoML quickstart guide](https://github.com/bentoml/gallery/tree/main) for how to get started
 
-## Deploy to Heroku with BentoCTL
+## Deploy to Heroku with bentoctl
 
-1. Install BentoCTL
+1. Install bentoctl
     ```bash
     $ pip install bentoctl
     ```
 
 2. Add Heroku operator
     ```bash
-    $ bentoctl operator add
-    Choose of the Official Operators
-    yatai
-    > heroku
-    aws-lambda
-    aws-sagemaker
-    asw-ec2
-    azure-functions
-    azure-container-instances
-    google_compute_engine
-    google-cloud-run      
+    $ bentoctl operator add heroku
+    
     Added heroku!   
     ```
 
-3. Deploy to Heroku use BentoCTL deploy command
+3. Deploy to Heroku use bentoctl deploy command in interactive mode
     ```bash
     # Use the interactive mode
     $ bentoctl deploy 
-    #
-    # or provide deployment spec yaml. See BentoCTL repo for more detail
-    $ bentoctl deploy --file deployment_spec.yaml
     
-    #example response
-    Login Heroku registry
-    Create Heroku app btml-test-script
-    Build Heroku app btml-test-script
-    Deploy Heroku app btml-test-script
-    === btml-test-script
-    Auto Cert Mgmt: false
-    Dynos:          web: 1
-    Git URL:        https://git.heroku.com/btml-test-script.git
-    Owner:          your-email@email.com
-    Region:         us
-    Repo Size:      0 B
-    Slug Size:      0 B
-    Stack:          container
-    Web URL:        https://btml-test-script.herokuapp.com/
+    Bentoctl Interactive Deployment Config Builder
+
+    Welcome! You are now in interactive mode.
+
+    This mode will help you setup the deployment_config.yaml file required for
+    deployment. Fill out the appropriate values for the fields.
+
+    (deployment config will be saved to: ./deployment_config.yaml)
+
+    api_version: v1
+    metadata:
+        name: testdeployment
+        operator: heroku
+    spec:
+        bento: testservice:vj2wrqs7egy6zn5zusy4drbc6
+        dyno_counts: 1
+        dyno_type: free
+    deployment config generated to: deployment_config.yaml
+    Deploying with generated deployment_config
     ```
 
 4. Get deployment information
@@ -91,13 +107,13 @@ This tool can be used as an Operator for the [BentoCTL](https://github.com/bento
     [0]%
     ```
 
-6. Delete deployment with BentoCTL
+6. Delete deployment with bentoctl
     ```bash
     $ bentoctl delete deployment_spec.yaml
     ```
 
 
-## Deploy to Heroku with opeartor scripts
+## Deploy to Heroku using scripts
 
 1. Download Heroku deployment and install the required packages
     ```bash
@@ -175,6 +191,13 @@ This tool can be used as an Operator for the [BentoCTL](https://github.com/bento
     # Output
     Removing app btml-test-script
     ```
+## Configuring the Deployment
+
+There is an optional config file available that you can use to specify the configs for your deployment, [heroku_config.json](heroku_config.json). This is the list of configurations you can use to deploy your bento to Heroku. Please refer to the documenation attached to each point for more information about the options
+
+- `dyno_counts`: Number of dynos running for the deployment. A dyno is an isolated, virtualized Linux container that is designed to execute your code. Check the [docs](https://devcenter.heroku.com/articles/dyno-types#default-scaling-limits), and [article](https://www.heroku.com/dynos) for more information
+- `dyno_type`: Dyno (instance) type. Each dyno type provides a certain number of RAM, CPU share, Compute, and wheter it sleeps. Check the [docs](https://devcenter.heroku.com/articles/dyno-types) for more information
+
 
 ## Deployment Command Reference
 
@@ -241,8 +264,3 @@ from heroku_deploy import delete
 
 delete(DEPLOYMENT_NAME)
 ```
-
-### Configuring the Deployment
-There is an optional config file available that you can use to specify the configs for your deployment, [heroku_config.json](heroku_config.json). This is the list of configurations you can use to deploy your bento to Heroku. Please refer to the documenation attached to each point for more information about the options
-- `dyno_counts`: Number of dynos running for the deployment. A dyno is an isolated, virtualized Linux container that is designed to execute your code. Check the [docs](https://devcenter.heroku.com/articles/dyno-types#default-scaling-limits), and [article](https://www.heroku.com/dynos) for more information
-- `dyno_type`: Dyno (instance) type. Each dyno type provides a certain number of RAM, CPU share, Compute, and wheter it sleeps. Check the [docs](https://devcenter.heroku.com/articles/dyno-types) for more information
