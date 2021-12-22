@@ -55,7 +55,7 @@ This tool can be used as an Operator for the [bentoctl](https://github.com/bento
     Added heroku!   
     ```
 
-3. Deploy to Heroku use entoctl deploy command in interactive mode
+3. Deploy to Heroku use bentoctl deploy command in interactive mode
     ```bash
     # Use the interactive mode
     $ bentoctl deploy 
