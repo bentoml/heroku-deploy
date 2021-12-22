@@ -1,11 +1,14 @@
-# BentoML Heroku Deployment Tool
-
-[![Generic badge](https://img.shields.io/badge/Release-Alpha-<COLOR>.svg)](https://shields.io/)
+<div align="center">
+    <h1>Heroku Operator</h1>
+    <p>
+        <img src="https://img.shields.io/badge/Release-Alpha-<COLOR>.svg"/>
+    </p>
+</div>
 
 Heroku is a popular platform as a service(PaaS) based on managed container system. It provides
 a complete solution for building, running, and scaling applications
 
-This tool can be used as an Operator for the [BentoCTL](https://github.com/bentoml/bentoctl). See steps on how to add Heroku Deployment Tool as an Operator [here](#deploy-to-heroku-with-bentoctl)
+This tool can be used as an Operator for the [bentoctl](https://github.com/bentoml/bentoctl). See steps on how to add Heroku Deployment Tool as an Operator [here](#deploy-to-heroku-with-bentoctl)
 
 ## Prerequisites
 
@@ -17,9 +20,9 @@ This tool can be used as an Operator for the [BentoCTL](https://github.com/bento
 - Built bento
     - Checkout [BentoML quickstart guide](https://github.com/bentoml/BentoML/blob/master/guides/quick-start/bentoml-quick-start-guide.ipynb) for how to get started
 
-## Deploy to Heroku with BentoCTL
+## Deploy to Heroku with bentoctl
 
-1. Install BentoCTL
+1. Install bentoctl
     ```bash
     $ pip install bentoctl
     ```
@@ -40,12 +43,12 @@ This tool can be used as an Operator for the [BentoCTL](https://github.com/bento
     Added heroku!   
     ```
 
-3. Deploy to Heroku use BentoCTL deploy command
+3. Deploy to Heroku use entoctl deploy command
     ```bash
     # Use the interactive mode
     $ bentoctl deploy 
     #
-    # or provide deployment spec yaml. See BentoCTL repo for more detail
+    # or provide deployment spec yaml. See bentoctl repo for more detail
     $ bentoctl deploy --file deployment_spec.yaml
     
     #example response
@@ -91,7 +94,7 @@ This tool can be used as an Operator for the [BentoCTL](https://github.com/bento
     [0]%
     ```
 
-6. Delete deployment with BentoCTL
+6. Delete deployment with bentoctl
     ```bash
     $ bentoctl delete deployment_spec.yaml
     ```
