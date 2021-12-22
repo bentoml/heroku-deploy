@@ -20,14 +20,14 @@ This tool can be used as an Operator for the [bentoctl](https://github.com/bento
    * [Prerequisites](#prerequisites)
    * [Deploy to Heroku with bentoctl](#deploy-to-heroku-with-bentoctl)
    * [Deploy to Heroku using scripts](#deploy-to-heroku-using-scripts)
+   * [Configuring the Deployment](#configuring-the-deployment)
    * [Deployment Command Reference](#deployment-command-reference)
       * [Create a Deployment](#create-a-deployment)
       * [Update a Deployment](#update-a-deployment)
       * [Get a Deployment’s Status and Information](#get-a-deployments-status-and-information)
       * [Delete a Deployment](#delete-a-deployment)
-      * [Configuring the Deployment](#configuring-the-deployment)
 
-<!-- Added by: jjmachan, at: Wednesday 22 December 2021 03:04:23 PM IST -->
+<!-- Added by: jjmachan, at: Wednesday 22 December 2021 03:32:43 PM IST -->
 
 <!--te-->
 
