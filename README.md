@@ -14,7 +14,6 @@ This tool can be used as an Operator for the [bentoctl](https://github.com/bento
 
 ## Table of Contents
 
-   * [Table of Contents](#table-of-contents)
    * [Prerequisites](#prerequisites)
    * [Deploy to Heroku with bentoctl](#deploy-to-heroku-with-bentoctl)
    * [Deploy to Heroku using scripts](#deploy-to-heroku-using-scripts)
