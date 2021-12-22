@@ -10,6 +10,25 @@ a complete solution for building, running, and scaling applications
 
 This tool can be used as an Operator for the [bentoctl](https://github.com/bentoml/bentoctl). See steps on how to add Heroku Deployment Tool as an Operator [here](#deploy-to-heroku-with-bentoctl)
 
+<!--ts-->
+
+## Table of Contents
+
+   * [Table of Contents](#table-of-contents)
+   * [Prerequisites](#prerequisites)
+   * [Deploy to Heroku with bentoctl](#deploy-to-heroku-with-bentoctl)
+   * [Deploy to Heroku using scripts](#deploy-to-heroku-using-scripts)
+   * [Deployment Command Reference](#deployment-command-reference)
+      * [Create a Deployment](#create-a-deployment)
+      * [Update a Deployment](#update-a-deployment)
+      * [Get a Deployment’s Status and Information](#get-a-deployments-status-and-information)
+      * [Delete a Deployment](#delete-a-deployment)
+      * [Configuring the Deployment](#configuring-the-deployment)
+
+<!-- Added by: jjmachan, at: Wednesday 22 December 2021 03:04:23 PM IST -->
+
+<!--te-->
+
 ## Prerequisites
 
 - An active Heroku account configured on the machine with AWS CLI installed and configured
@@ -100,7 +119,7 @@ This tool can be used as an Operator for the [bentoctl](https://github.com/bento
     ```
 
 
-## Deploy to Heroku with opeartor scripts
+## Deploy to Heroku using scripts
 
 1. Download Heroku deployment and install the required packages
     ```bash
