@@ -45,7 +45,7 @@ This tool can be used as an Operator for the [bentoctl](https://github.com/bento
 
 1. Install bentoctl
     ```bash
-    $ pip install bentoctl
+    $ pip install --pre bentoctl
     ```
 
 2. Add Heroku operator
