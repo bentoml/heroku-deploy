@@ -1,9 +1,10 @@
 from bentoml.bentos import containerize
+
 from .utils import (
     generate_heroku_resource_names,
-    run_shell_command,
     get_tag_from_path,
     push_image,
+    run_shell_command,
 )
 
 
@@ -25,9 +26,7 @@ def deploy_bento(bento_path, deployment_spec, app_name, repository_url):
     containerize(bento_tag.name, docker_image_tag=repository_url)
 
     print(f"Push Heroku app {app_name}")
-    push_image(
-        repository=repository_url
-    )
+    push_image(repository=repository_url)
 
     print(f"Deploy Heroku app {app_name}")
     run_shell_command(["heroku", "container:release", "web", "--app", app_name])
