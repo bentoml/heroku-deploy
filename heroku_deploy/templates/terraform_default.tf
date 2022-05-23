@@ -45,7 +45,7 @@ variable "dyno_counts" {
 }
 
 variable "dyno_type" {
-  description = "The dyno types:"
+  description = "The dyno types"
 }
 
 ################################################################################
