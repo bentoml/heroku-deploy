@@ -6,15 +6,14 @@ from bentoctl.utils.operator_helpers.generate import (
 )
 from bentoctl.utils.operator_helpers.values import DeploymentValues
 
-HEROKU_IMAGE_VERSION = "latest"
-
 
 class HerokuDeploymentValues(DeploymentValues):
     @staticmethod
     def parse_image_tag(image_tag: str):
-        registry_url, app_name, _ = image_tag.split("/")
+        registry_url, app_name, tag = image_tag.split("/")
+        _, version = tag.split(":")
 
-        return registry_url, app_name, HEROKU_IMAGE_VERSION
+        return registry_url, app_name, version
 
 
 class HerokuGenerate(Generate):
