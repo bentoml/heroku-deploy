@@ -56,4 +56,4 @@ def create_repository(deployment_name, operator_spec):
 
 
 def delete_repository(deployment_name, operator_spec):
-    pass
+    heroku_run(["apps:destroy", deployment_name, "--confirm", deployment_name])
