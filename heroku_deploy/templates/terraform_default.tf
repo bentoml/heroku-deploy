@@ -40,44 +40,39 @@ variable "image_version" {
   type        = string
 }
 
-variable "region" {
-
-}
-variable "dyno_count" {
-
+variable "dyno_counts" {
+  description = "The number of dynos to use"
 }
 
 variable "dyno_type" {
-
+  description = "The dyno types:"
 }
 
 ################################################################################
 # Resources
 ################################################################################
 
-resource "heroku_app" "bento" {
-  #todo: append with random string
-  name   = "${var.deployment_name}-jjamchan"
-  region = "us"
+data "heroku_app" "bento" {
+  name = var.deployment_name
 }
 
 data "herokux_registry_image" "img" {
-  app_id       = heroku_app.example.uuid
+  app_id       = data.heroku_app.bento.uuid
   process_type = "web"
-  docker_tag   = "latest"
+  docker_tag   = var.image_version
 }
 
 resource "herokux_app_container_release" "release" {
-  app_id       = heroku_app.bento.uuid
+  app_id       = data.heroku_app.bento.uuid
   image_id     = data.herokux_registry_image.img.digest
   process_type = "web"
 }
 
 # Launch the app's web process by scaling-up
 resource "heroku_formation" "formation" {
-  app_id     = heroku_app.bento.id
+  app_id     = data.heroku_app.bento.id
   type       = "web"
-  quantity   = var.dyno_count
+  quantity   = var.dyno_counts
   size       = var.dyno_type
   depends_on = [herokux_app_container_release.release]
 }
@@ -88,5 +83,5 @@ resource "heroku_formation" "formation" {
 ################################################################################
 
 output "example_app_url" {
-  value = "https://${heroku_app.bento.name}.herokuapp.com"
+  value = "https://${data.heroku_app.bento.name}.herokuapp.com"
 }
