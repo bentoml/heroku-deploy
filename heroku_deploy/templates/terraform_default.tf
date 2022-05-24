@@ -82,6 +82,6 @@ resource "heroku_formation" "formation" {
 # Output value definitions
 ################################################################################
 
-output "example_app_url" {
+output "app_url" {
   value = "https://${data.heroku_app.bento.name}.herokuapp.com"
 }
