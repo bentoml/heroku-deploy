@@ -4,7 +4,7 @@
 
 
 Heroku is a popular platform as a service(PaaS) based on managed container system. It provides
-a complete solution for building, running, and scaling applications With the combination of [BentoML](https://github.com/bentoml/BentoML) and [bentoctl](https://github.com/bentoml/bentoctl), you can deploy the models build with your favourite ML frameworks easily manage the infrastructure via terraform.
+a complete solution for building, running, and scaling applications With the combination of [BentoML](https://github.com/bentoml/BentoML) and [bentoctl](https://github.com/bentoml/bentoctl), you can deploy the models built with your favourite ML frameworks easily and manage the infrastructure via terraform.
 
 > **Note:** This operator is compatible with BentoML version 1.0.0 and above. For older versions, please switch to the branch `pre-v1.0` and follow the instructions in the README.md.
 
@@ -20,10 +20,10 @@ This quickstart will walk you through deploying a bento into Heroku. Make sure t
 
 ### Prerequisites
 
-1. Heroku CLI - Make sure the it is installed and that you are logged in with an existing heroku accound. [Installation instructions](https://devcenter.heroku.com/articles/heroku-cli)
-2. Terraform - Terraform is a tool for building, configuring, and managing infrastructure. Installation instruction: www.terraform.io/downloads
-3. Docker - Install instruction: https://docs.docker.com/install
-4. A working bento - for this guide, we will use the iris-classifier bento from the BentoML [quickstart guide](https://docs.bentoml.org/en/latest/quickstart.html#quickstart) or [import a prebuild bento](https://github.com/bentoml/bentoctl/blob/main/docs/quickstart.md#step-1-import-a-bento) from S3
+1. Heroku CLI - Make sure that Heroku CLI is installed and you are logged in with an existing heroku account. [Installation instructions](https://devcenter.heroku.com/articles/heroku-cli)
+2. Terraform - Terraform is a tool for building, configuring, and managing infrastructure. Installation instructions: www.terraform.io/downloads
+3. Docker - Install instructions: https://docs.docker.com/install
+4. A working bento - for this guide, we will use the iris-classifier bento from the BentoML [quickstart guide](https://docs.bentoml.org/en/latest/quickstart.html#quickstart) or [import a prebuilt bento](https://github.com/bentoml/bentoctl/blob/main/docs/quickstart.md#step-1-import-a-bento) from S3
 
 
 ### steps
