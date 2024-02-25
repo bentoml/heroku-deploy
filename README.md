@@ -1,7 +1,8 @@
-<div align="center">
-    <h1>Heroku Operator</h1>
-</div>
+## ⚠️ BentoCTL project has been deprecated
 
+Plese see the latest BentoML documentation on OCI-container based deployment workflow: https://docs.bentoml.com/
+
+## Heroku Operator
 
 Heroku is a popular platform as a service(PaaS) based on managed container system. It provides
 a complete solution for building, running, and scaling applications With the combination of [BentoML](https://github.com/bentoml/BentoML) and [bentoctl](https://github.com/bentoml/bentoctl), you can deploy the models built with your favourite ML frameworks easily and manage the infrastructure via terraform.
